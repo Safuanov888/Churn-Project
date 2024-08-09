@@ -1,42 +1,339 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-	<head>
-		<meta charset="utf-8">
-		<title></title>
-	</head>
-	<body>
-		<h1>Предсказание оттока клиента, исходя из его потребительской истории</h1>
-		
-	<form action="{% url 'result' %}">
+<head>
+    <meta charset="utf-8">
+    <title>Предсказание оттока клиента</title>
+    <style>
+        body {
+            background-color: #f0f0f0; 
+            font-family: Arial, sans-serif;
+        }
+        h2, h3 {
+            color: green;
+        }
+        .form-container {
+            margin: auto;
+            width: 50%;
+            padding: 10px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .numbered-input {
+            color: blue; 
+            font-weight: bold;
+        }
+        .input-popup {
+            position: relative;
+        }
+        .input-popup input[type="text"] {
+            width: calc(100% - 40px);
+        }
+        .popup-options {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            border: 1px solid #ccc;
+            width: 100%;
+            z-index: 1;
+        }
+        .popup-options div {
+            padding: 5px;
+            cursor: pointer;
+        }
+        .popup-options div:hover {
+            background: #f0f0f0;
+        }
+		.submit-btn {
+            height: 50px;
+            width: 300px;
+            color: white;
+            background-color: green;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-left: 300px; /* Добавлено для сдвига вправо */
+            display: block;
+        }
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+		.corner-text-container {
+            position: absolute;
+            top: 1300px;
+            right: 100px;
+            background-color: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .corner-text {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+		.btn-info {
+		position: absolute;
+		left: 50px;
+		bottom: 650px;
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 1.2em;
+        color: white;
+        background-color: #4CAF50; /* Зеленый цвет кнопки */
+        text-decoration: none;
+        border-radius: 8px; /* Закругленные углы */
+        transition: background-color 0.3s, box-shadow 0.3s; /* Эффект при наведении */
+		}
+		.btn-info:hover {
+			background-color: #45a049; /* Более темный цвет при наведении */
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Тень при наведении */
+		}
+    </style>
+</head>
+<body>
+    <h2 style="text-align: center;">Добро пожаловать на сайт предсказания оттока клиента с помощью модели машинного обучения, исходя из его потребительской истории</h2>
+    <h3 style="text-align: center;">Введите данные по предложенной форме</h3>
+    <div class="form-container">
+        <form action="{% url 'result' %}">
+            {% csrf_token %}
+            <div class="input-popup">
+                <span class="numbered-input">1. К какому полу относится человек:</span>
+                <input type="text" required name="Гендер человека">
+                <div class="popup-options">
+                    <div data-value="1">1 - Мужчина</div>
+                    <div data-value="0">0 - Женщина</div>
+                </div>
+            </div>
+            <br><br>
+			<div class="input-popup">
+                <span class="numbered-input">2. Является ли человек пенсионером (больше 65 лет):</span>
+                <input type="text" required name="Пенсионер">
+                <div class="popup-options">
+                    <div data-value="1">1 - Да</div>
+                    <div data-value="0">0 - Нет</div>
+                </div>
+            </div>
+            <br><br>
+			<div class="input-popup">
+                <span class="numbered-input">3. Есть ли у человека жена/муж:</span>
+                <input type="text" required name="Женат/замужем">
+                <div class="popup-options">
+                    <div data-value="1">1 - Да</div>
+                    <div data-value="0">0 - Нет</div>
+                </div>
+            </div>
+            <br><br>
+			<div class="input-popup">
+                <span class="numbered-input">4. Есть ли у человека дети:</span>
+                <input type="text" required name="Есть дети">
+                <div class="popup-options">
+                    <div data-value="1">1 - Да</div>
+                    <div data-value="0">0 - Нет</div>
+                </div>
+            </div>
+            <br><br>
+			<div class="input-popup">
+                <span class="numbered-input">5. Длительность контракта человека в месяцах:</span>
+                <input type="text" required name="Длительность контракта (месяцы)">
+				<div class="popup-options">
+                </div>
+            </div>
+            <br><br>
+			<div class="input-popup">
+                <span class="numbered-input">6. Есть ли у человека подписка на домашний телефон компании:</span>
+                <input type="text" required name="Подписка на домашний телефон компании">
+                <div class="popup-options">
+                    <div data-value="1">1 - Да</div>
+                    <div data-value="0">0 - Нет</div>
+                </div>
+            </div>
+            <br><br>
+			<div class="input-popup">
+                <span class="numbered-input">7. Есть ли у человека подписка на несколько телефонных линий компании:</span>
+                <input type="text" required name="Подписка на несколько телефонных линий компании">
+                <div class="popup-options">
+                    <div data-value="1">1 - Да</div>
+                    <div data-value="0">0 - Нет</div>
+					<div data-value="2">2 - Сервис не поддерживается</div>
+                </div>
+            </div>
+            <br><br>
+			<div class="input-popup">
+                <span class="numbered-input">8. Какой интернет-услугой компании пользуется человек:</span>
+                <input type="text" required name="Интернет услуга компании">
+                <div class="popup-options">
+                    <div data-value="1">1 - Никакой</div>
+                    <div data-value="2">2 - DSL</div>
+					<div data-value="3">3 - Fiber Optic</div>
+                </div>
+            </div>
+            <br><br>
+			<div class="input-popup">
+                <span class="numbered-input">9. Есть ли у человека подписка на онлайн безопасность:</span>
+                <input type="text" required name="Подписка на онлайн безопасность">
+                <div class="popup-options">
+                    <div data-value="1">1 - Да</div>
+                    <div data-value="0">0 - Нет</div>
+					<div data-value="2">2 - Сервис не поддерживается</div>
+                </div>
+            </div>
+            <br><br>
+			<div class="input-popup">
+                <span class="numbered-input">10. Есть ли у человека подписка на резервное копирование:</span>
+                <input type="text" required name="Подписка на резервное копирование">
+                <div class="popup-options">
+                    <div data-value="1">1 - Да</div>
+                    <div data-value="0">0 - Нет</div>
+					<div data-value="2">2 - Сервис не поддерживается</div>
+                </div>
+            </div>
+            <br><br>
+			<div class="input-popup">
+                <span class="numbered-input">11. Есть ли у человека подписка на дополнительную онлайн безопасность:</span>
+                <input type="text" required name="Подписка на дополнительную онлайн безопасность">
+                <div class="popup-options">
+                    <div data-value="1">1 - Да</div>
+                    <div data-value="0">0 - Нет</div>
+					<div data-value="2">2 - Сервис не поддерживается</div>
+                </div>
+            </div>
+            <br><br>
+			<div class="input-popup">
+                <span class="numbered-input">12. Есть ли у человека подписка на техническую поддержку:</span>
+                <input type="text" required name="Подписка на техническую поддержку">
+                <div class="popup-options">
+                    <div data-value="1">1 - Да</div>
+                    <div data-value="0">0 - Нет</div>
+					<div data-value="2">2 - Сервис не поддерживается</div>
+                </div>
+            </div>
+            <br><br>
+			<div class="input-popup">
+                <span class="numbered-input">13. Есть ли у человека подписка на потоковую передачу телевезионных программ:</span>
+                <input type="text" required name="Подписка на потоковую передачу телевезионных программ">
+                <div class="popup-options">
+                    <div data-value="1">1 - Да</div>
+                    <div data-value="0">0 - Нет</div>
+					<div data-value="2">2 - Сервис не поддерживается</div>
+                </div>
+            </div>
+            <br><br>
+			<div class="input-popup">
+                <span class="numbered-input">14. Есть ли у человека подписка на трансляцию фильмов:</span>
+                <input type="text" required name="Подписка на трансляцию фильмов">
+                <div class="popup-options">
+                    <div data-value="1">1 - Да</div>
+                    <div data-value="0">0 - Нет</div>
+					<div data-value="2">2 - Сервис не поддерживается</div>
+                </div>
+            </div>
+            <br><br>
+			<div class="input-popup">
+                <span class="numbered-input">15. На какой срок человек подписал контракт:</span>
+                <input type="text" required name="Тип контракта">
+                <div class="popup-options">
+                    <div data-value="1">1 - Несколько месяцев</div>
+                    <div data-value="2">2 - Год</div>
+					<div data-value="3">3 - Два года</div>
+                </div>
+            </div>
+            <br><br>
+			<div class="input-popup">
+                <span class="numbered-input">16. Есть ли у человека подписка на онлайн оплату:</span>
+                <input type="text" required name="Подписка на онлайн оплату">
+                <div class="popup-options">
+                    <div data-value="1">1 - Да</div>
+                    <div data-value="0">0 - Нет</div>
+                </div>
+            </div>
+            <br><br>
+			<div class="input-popup">
+                <span class="numbered-input">17. Каким способом оплаты интернета пользуется человек:</span>
+                <input type="text" required name="Способ оплаты интернета">
+                <div class="popup-options">
+                    <div data-value="1">1 - Электронный чек</div>
+                    <div data-value="2">2 - Чек по почте</div>
+					<div data-value="3">3 - Перевод из банка</div>
+					<div data-value="4">4 - Кредитная карта</div>
+                </div>
+            </div>
+            <br><br>
+			<div class="input-popup">
+                <span class="numbered-input">18. Ежемесячные траты человека на пользование интернетом в долларах:</span>
+                <input type="text" required name="Ежемесячные траты на пользование интернетом">
+            </div>
+            <br><br>
+			<div class="input-popup">
+                <span class="numbered-input">19. Общие траты за весь период пользования интернетом в долларах:</span>
+                <input type="text" required name="Общие траты за весь период пользования интернетом">
+            </div>
+            <br><br>
+			<div class="corner-text-container">
+				<div class="corner-text">Выбор модели машинного обучения</div>
+				<input type="text" id="corner-input" required name="Модель">
+				<div class="popup-options" id="corner-options">
+					<div data-value="1">Логистическая регрессия</div>
+					<div data-value="2">Случайный лес</div>
+					<div data-value="3">Адаптивный бустинг</div>
+				</div>
+			</div>
 	
-	{% csrf_token %}
-	
-	1. К какому полу относится человек: 1 - Мужчина, 0 - Женщина <input type="text" required name="Гендер человека"> <br> <br>
-	2. Является ли человек пенсионером (больше 65 лет): 1 - Да, 0 - Нет <input type="text" required name="Пенсионер"> <br> <br>
-	3. Есть ли у человека жена/муж: 1 - Да, 0 - Нет <input type="text" required name="Женат/замужем"> <br> <br>
-	4. Есть ли у человека дети: 1 - Да, 0 - Нет <input type="text" required name="Есть дети"> <br> <br>
-	5. Длительность контракта человека в месяцах <input type="text" required name="Длительность контракта (месяцы)"> <br> <br>
-	6. Есть ли у человека подписка на домашний телефон компании: 1 - Да, 0 - Нет <input type="text" required name="Подписка на домашний телефон компании"> <br> <br>
-	7. Есть ли у человека подписка на несколько телефонных линий компании: 1 - Да, 0 - Нет, 2 - Сервис не поддерживается <input type="text" required name="Подписка на несколько телефонных линий компании"> <br> <br>
-	8. Какой интернет-услугой компании пользуется человек: 1 - Никакой, 2 - DSL, 3 - Fiber Optic <input type="text" required name="Интернет услуга компании"> <br> <br>
-	9. Есть ли у человека подписка на онлайн безопасность: 1 - Да, 0 - Нет, 2 - Сервис не поддерживается <input type="text" required name="Подписка на онлайн безопасность"> <br> <br>
-	10. Есть ли у человека подписка на резервное копирование: 1 - Да, 0 - Нет, 2 - Сервис не поддерживается <input type="text" required name="Подписка на резервное копирование"> <br> <br>
-	11. Есть ли у человека подписка на дополнительную онлайн безопасность: 1 - Да, 0 - Нет, 2 - Сервис не поддерживается <input type="text" required name="Подписка на дополнительную онлайн безопасность"> <br> <br>
-	12. Есть ли у человека подписка на техническую поддержку: 1 - Да, 0 - Нет, 2 - Сервис не поддерживается <input type="text" required name="Подписка на техническую поддержку"> <br> <br>
-	13. Есть ли у человека подписка на потоковую передачу телевезионных программ: 1 - Да, 0 - Нет, 2 - Сервис не поддерживается <input type="text" required name="Подписка на потоковую передачу телевезионных программ"> <br> <br>
-	14. Есть ли у человека подписка на трансляцию фильмов: 1 - Да, 0 - Нет, 2 - Сервис не поддерживается <input type="text" required name="Подписка на трансляцию фильмов"> <br> <br>
-	15. На какой срок человек подписал контракт: 1 - Несколько месяцев, 2 - Год, 3 - Два года <input type="text" required name="Тип контракта"> <br> <br>
-	16. Есть ли у человека подписка на онлайн оплату: 1 - Да, 0 - Нет <input type="text" required name="Подписка на онлайн оплату"> <br> <br>
-	17. Каким способом оплаты интернета пользуется человек: 1 - Электронный чек, 2 - Чек по почте, 3 - Перевод из банка, 4 - Кредитная карта <input type="text" required name="Способ оплаты интернета"> <br> <br>
-	18. Ежемесячные траты человека на пользование интернетом в долларах: <input type="text" required name="Ежемесячные траты на пользование интернетом"> <br> <br>
-	19. Общие траты за весь период пользования интернетом в долларах: <input type="text" required name="Общие траты за весь период пользования интернетом"> <br> <br>
 	
 	
 	
+		<input type="submit" class="submit-btn" value="Предсказать">
 	
-	<input type="submit" name="" value="submit">
+		</form>
+	</div>
+	<a href="{% url 'info' %}" class="btn-info">Больше информации про данные</a>
 	
-	</form>
-	
+	<script>
+        document.querySelectorAll('.input-popup').forEach(popupContainer => {
+            const input = popupContainer.querySelector('input[type="text"]');
+            const options = popupContainer.querySelector('.popup-options');
+
+            input.addEventListener('focus', () => {
+                options.style.display = 'block';
+            });
+
+            input.addEventListener('blur', () => {
+                setTimeout(() => {
+                    options.style.display = 'none';
+                }, 200);
+            });
+
+            options.addEventListener('click', (e) => {
+                if (e.target.dataset.value) {
+                    input.value = e.target.dataset.value;
+                    options.style.display = 'none';
+                }
+            });
+        });
+    </script>
+	<script>
+        document.getElementById('corner-input').addEventListener('click', function() {
+            document.getElementById('corner-options').style.display = 'block';
+        });
+
+        document.getElementById('corner-options').addEventListener('click', function(event) {
+            if (event.target.dataset.value) {
+                document.getElementById('corner-input').value = event.target.textContent;
+                document.getElementById('corner-options').style.display = 'none';
+            }
+        });
+
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.corner-text-container')) {
+                document.getElementById('corner-options').style.display = 'none';
+            }
+        });
+    </script>
 	</body>
 </html>

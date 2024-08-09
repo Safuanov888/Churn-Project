@@ -1,0 +1,118 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <title>Информация о данных</title>
+    <style>
+        body {
+            background-color: #f0f0f0; /* Цвет фона */
+            font-family: Arial, sans-serif;
+            color: #333; /* Основной цвет текста */
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        h1 {
+            color: green; /* Цвет заголовка */
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        h3 {
+            color: #555; /* Цвет подзаголовка */
+            font-size: 1.25em;
+            margin: 20px 0;
+            text-align: justify;
+        }
+
+        a {
+            color: #4CAF50; /* Цвет ссылки */
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: #388E3C; /* Цвет при наведении */
+        }
+
+        .img_1 {
+            display: block;
+            margin: 30px auto;
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+		.back-button {
+            display: inline-block;
+            padding: 12px 24px;
+            font-size: 1.2em;
+            color: white;
+            background-color: #4CAF50; /* Зеленый цвет кнопки */
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background-color 0.3s, transform 0.3s;
+            text-align: center;
+            margin-top: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+			position: absolute;
+			right: 50px;
+			top: 150px;
+        }
+
+        .back-button:hover {
+            background-color: #45a049; /* Более темный цвет при наведении */
+            transform: translateY(-2px); /* Легкий подъём при наведении */
+        }
+
+        .back-button-container {
+            text-align: center; /* Центровка кнопки */
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Детальная информация о данных</h1>
+        <h3>В данном проекте я рассмотрел историю клиентов, пользовавшихся услугами вымышленной интернет-компании, находящейся в США. И на основе этих данных я построил модель классификации, которая определяет, 
+		уйдёт ли клиент от компании или же останется. Эту модель можно было бы применять для обнаружения уходящих клиентов и последующего предпринятия мер для предотвращения их ухода.</h3>
+		<div class="back-button-container">
+            <a href="{% url 'home' %}" class="back-button">Вернуться на главную страницу</a>
+        </div>
+        <a href="https://www.kaggle.com/datasets/blastchar/telco-customer-churn" target="_blank">Данные я взял с платформы Kaggle</a>
+        <h1>1. Общая информация</h1>
+        <h3>Начнём со взгляда на все столбцы, которые у нас есть в датасете. Они как раз и представлены на главной странице в качестве ввода, только на русском языке и без колонки CustomerID.</h3>
+        <img class="img_1" src="{% static 'images/info_1.png' %}" alt="info_1">
+		<h3>Теперь посмотрим на общую сводку статистических показателей. В датасете больше категориальных столбцов, и для них нет смысла делать такие  подсчёты, поэтому берутся только числовые столбцы.</h3>
+		<img class="img_1" src="{% static 'images/info_2.png' %}" alt="info_2">
+		<h3>Также не обойтись без матрицы корреляций между переменными. Прежде чем строить её я провёл one-hot-encoding, чтобы пронумеровать  категориальные столбцы.</h3>
+		<img class="img_1" src="{% static 'images/info_3.png' %}" alt="info_3">
+		<h3>Посмотрим на сбалансированность людей уходящих в отток и не уходящих в отток. Как видим, большая часть остаётся.</h3>
+		<img class="img_1" src="{% static 'images/info_4.png' %}" alt="info_4">
+		<h1>2. Анализ оттока</h1>
+		<h3>А сейчас заострим своё внимание на общую картину длительности контрактов. Видно, что в первое время больше уходящих клиентов.</h3>
+		<img class="img_1" src="{% static 'images/info_5.png' %}" alt="info_5">
+		<h3>Рассмотрим отток клиентов на основе подписанного контракта. Может быть на несколько месяцев, год или 2 года. Здесь такая же тенденция, что в первое время уходит больше народу.</h3>
+		<img class="img_1" src="{% static 'images/info_6.png' %}" alt="info_6">
+		<h3>И наконец, посмотрим на долю уходящих людей по мере увеличения срока контракта. Чем дольше человек пользуется интернетом, тем менее он склонен к уходу.</h3>
+		<img class="img_1" src="{% static 'images/info_7.png' %}" alt="info_7">
+		<h1>3. Связь всех переменных со столбцом Churn</h1>
+		<h3>Этот пункт поможет заполнить форму для предсказания на главной странице. Благодаря этому графику можно определить самые связанные с оттоком колонки, и выбрать наиболее подходящий вариант в зависимости от ваших целей.</h3>
+		<img class="img_1" src="{% static 'images/info_8.png' %}" alt="info_8">
+    </div>
+</body>
+</html>

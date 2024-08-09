@@ -1,13 +1,107 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-	<head>
-		<meta charset="utf-8">
-		<title></title>
-	</head>
-	<body>
-		This is my html
-		
-		
-		Результат предсказания (1 - клиент ушёл, 0 - клиент остался): {{ans}}
-	</body>
+<head>
+    <meta charset="utf-8">
+    <title>Результат предсказания</title>
+    <style>
+        body {
+            background-color: #f0f0f0; /* Цвет фона */
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 20vh;
+            margin: 0;
+        }
+        h1 {
+            color: green; /* Цвет текста для результата */
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-align: center;
+			margin-top: 0px;
+        }
+		h2 {
+			color: green; /* Цвет текста */
+			font-size: 2em;
+			position: absolute;
+			top: 170px; /* Положение сверху относительно родителя */
+			left: 50%; /* Сдвиг влево на 50% */
+			transform: translateX(-50%); /* Центровка по горизонтали */
+		}
+		.custom_text_1 {
+			color: red; /* Цвет текста */
+			font-size: 1.25em;
+			position: absolute;
+			top: 300px; /* Положение сверху относительно родителя */
+			left: 17%; /* Сдвиг влево на 50% */
+			transform: translateX(-50%); /* Центровка по горизонтали */
+		}
+		.custom_text_2 {
+			color: red; /* Цвет текста */
+			font-size: 1.25em;
+			position: absolute;
+			top: 300px; /* Положение сверху относительно родителя */
+			left: 50%; /* Сдвиг влево на 50% */
+			transform: translateX(-50%); /* Центровка по горизонтали */
+		}
+		.custom_text_3 {
+			color: red; /* Цвет текста */
+			font-size: 1.25em;
+			position: absolute;
+			top: 300px; /* Положение сверху относительно родителя */
+			left: 85%; /* Сдвиг влево на 50% */
+			transform: translateX(-50%); /* Центровка по горизонтали */
+		}
+        a {
+            text-decoration: none;
+            color: white;
+            background-color: #4CAF50; /* Зеленый цвет кнопки */
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1.2em;
+            transition: background-color 0.3s;
+        }
+        a:hover {
+            background-color: #45a049; /* Более темный цвет при наведении */
+        }
+		.img_1 {
+            display: block;
+            position: absolute;
+			left: 8%;
+			top: 400px;
+            max-width: 50%;
+            height: auto;
+        }
+		.img_2 {
+            display: block;
+            position: absolute;
+			left: 35%;
+			top: 400px;
+            max-width: 50%;
+            height: auto;
+        }
+		.img_3 {
+            display: block;
+            position: absolute;
+			left: 68%;
+			top: 400px;
+            max-width: 50%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ans}}.</h1>
+    <a href="{% url 'home' %}">Вернуться на главную страницу</a>
+	<h2>Как обучилась модель "{{model_name}}"</h2>
+	<div class="custom_text_1">Метрики качества модели</div>
+	<img class="img_1" src="{{image_1}}" alt="LogisticRegression_1">
+	<div class="custom_text_2">Матрица ошибок по выборке из 704 клиентов</div>
+	<img class="img_2" src="{{image_2}}" alt="LogisticRegression_2">
+	<div class="custom_text_3">ROC-кривая и метрика AUC</div>
+	<img class="img_3" src="{{image_3}}" alt="LogisticRegression_3">
+</body>
 </html>
