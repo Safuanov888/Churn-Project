@@ -14,7 +14,8 @@
 
 1. Главная страница сайта - на ней можно заполнить форму со своими данными для предсказания оттока абонента, а также выбрать 1 из 3 моделей.
 
-   ![image](https://github.com/user-attachments/assets/dae1a156-77af-44db-912c-70651f15b4a6)
+   ![image](https://github.com/user-attachments/assets/33736b75-0dab-47d2-941b-9246ac05ac7c)
+
 
 
    ![image](https://github.com/user-attachments/assets/7bfd1b24-dd46-4548-9baf-3b151bc5cf6f)
