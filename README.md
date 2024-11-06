@@ -19,3 +19,11 @@
 
 
    ![image](https://github.com/user-attachments/assets/8658a7cf-5ac7-42a7-be94-17950ad70a0a)
+
+
+2. Также на главной странице сбоку расположена кнопка "Больше информации про данные", нажав на которую можно поближе познакомиться с данными для обучения моделей.
+
+   ![image](https://github.com/user-attachments/assets/09b91b93-af89-42c0-92d8-08d136323e42)
+
+
+   ![image](https://github.com/user-attachments/assets/0e890f2f-8a07-4a55-82c1-d7b9a62b1d8d)
