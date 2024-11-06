@@ -33,3 +33,14 @@
 
 
    ![image](https://github.com/user-attachments/assets/ab347cdb-9df7-46d4-adfb-3388a76395a9)
+
+
+3. При нажатии на кнопку "Предсказать" на главной странице после заполнения формы происходит переход на страницу с полученным результатом - клиент уйдёт/не уйдёт. К тому же, есть возможность посмотреть дополнительные графики, которые поясняют обучение модели.
+
+   ![image](https://github.com/user-attachments/assets/b2947adb-61be-4b90-8e2f-6f329ebce513)
+
+
+   ![image](https://github.com/user-attachments/assets/a08880ee-df64-4b77-95a0-f7b0d07509c2)
+
+
+   ![image](https://github.com/user-attachments/assets/556ab4fb-7933-4201-8fcf-dee1c54cf320)
